@@ -42,6 +42,7 @@ add.constraint(lprec, c(450, 0, -750, 450, 0, -750, 450, 0, -750), "=", 0)
 # Set bounds (non-negative)
 set.bounds(lprec, lower = rep(0, 9))
 
+write.lp(lprec,filename = "Plant.lp", type ="lp")
 lprec
 
 # Solve and output results

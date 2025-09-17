@@ -362,7 +362,7 @@ display: none;
 <p>The purpose of this assignment is to solve a linear programming
 problem using R libraries.</p>
 <pre class="r"><code>library(&quot;lpSolveAPI&quot;)   # loads the lp solve library</code></pre>
-<pre class="r"><code>lprec &lt;- make.lp(0,9)   # make an lp object with 9 decison variables and 0 constarints
+<pre class="r"><code>lprec &lt;- make.lp(0,9)   # make an lp object with 9 decision variables and 0 constraints
 
 set.objfn(lprec,c(420, 420, 420,360, 360, 360,300, 300, 300))   #create the objective function
 
@@ -450,27 +450,26 @@ add.constraint(lprec, c(0, 0, 0, 1, 1, 1, 0, 0, 0), &quot;&lt;=&quot;, 1200)  # 
 add.constraint(lprec, c(0, 0, 0, 0, 0, 0, 1, 1, 1), &quot;&lt;=&quot;, 750)   # Small
 
 # Equal % Capacity constraints
-# 900*(x1L + x1M + x1S) - 750*(x2L + x2M + x2S) = 0
-add.constraint(lprec, c(900, -750, 0, 900, -750, 0, 900, -750, 0), &quot;=&quot;, 0)
 
-# 450*(x1L + x1M + x1S) - 750*(x3L + x3M + x3S) = 0
+add.constraint(lprec, c(900, -750, 0, 900, -750, 0, 900, -750, 0), &quot;=&quot;, 0)
 add.constraint(lprec, c(450, 0, -750, 450, 0, -750, 450, 0, -750), &quot;=&quot;, 0)
 
-# --- Set variable bounds (non-negative) ---
+# Set bounds (non-negative)
 set.bounds(lprec, lower = rep(0, 9))
 
+write.lp(lprec,filename = &quot;Plant.lp&quot;, type =&quot;lp&quot;)
 lprec</code></pre>
 <pre><code>## Model name: 
 ##   a linear program with 9 decision variables and 11 constraints</code></pre>
-<pre class="r"><code># --- Solve and output results ---
-solve(lprec)                 # 0 means optimal</code></pre>
+<pre class="r"><code># Solve and output results
+solve(lprec)                 </code></pre>
 <pre><code>## [1] 0</code></pre>
-<pre class="r"><code>get.objective(lprec)        # Total max profit</code></pre>
+<pre class="r"><code>get.objective(lprec)      # get objective value</code></pre>
 <pre><code>## [1] 696000</code></pre>
-<pre class="r"><code>get.variables(lprec)        # Values of each variable</code></pre>
+<pre class="r"><code>get.variables(lprec)      # get values of decision variables</code></pre>
 <pre><code>## [1] 516.6667   0.0000   0.0000 177.7778 666.6667   0.0000   0.0000 166.6667
 ## [9] 416.6667</code></pre>
-<pre class="r"><code>get.constraints(lprec)      # Check constraints RHS</code></pre>
+<pre class="r"><code>get.constraints(lprec)    # get constraints RHS values</code></pre>
 <pre><code>##  [1]  6.944444e+02  8.333333e+02  4.166667e+02  1.300000e+04  1.200000e+04
 ##  [6]  5.000000e+03  5.166667e+02  8.444444e+02  5.833333e+02 -2.037268e-10
 ## [11]  0.000000e+00</code></pre>
