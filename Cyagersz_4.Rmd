@@ -4,27 +4,62 @@ author: "Cole Yagersz"
 date: "2025-09-16"
 output: html_document
 ---
+## Introduction
+The purpose of this assignment is to solve a linear programming problem using R libraries.
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+```{r}
+library("lpSolveAPI")   # loads the lp solve library
 ```
 
-## R Markdown
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+```{r}
+lprec <- make.lp(0,9)   # make an lp object with 9 decision variables and 0 constraints
 
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+set.objfn(lprec,c(420, 420, 420,360, 360, 360,300, 300, 300))   #create the objective function
 
-```{r cars}
-summary(cars)
+lp.control(lprec,sense='max')
+
+# Plant capacity constraints
+add.constraint(lprec, c(1, 0, 0, 1, 0, 0, 1, 0, 0), "<=", 750)   # Plant 1
+add.constraint(lprec, c(0, 1, 0, 0, 1, 0, 0, 1, 0), "<=", 900)   # Plant 2
+add.constraint(lprec, c(0, 0, 1, 0, 0, 1, 0, 0, 1), "<=", 450)   # Plant 3
+
+# Storage space constraints
+add.constraint(lprec, c(20, 0, 0, 15, 0, 0, 12, 0, 0), "<=", 13000)  # Plant 1
+add.constraint(lprec, c(0, 20, 0, 0, 15, 0, 0, 12, 0), "<=", 12000)  # Plant 2
+add.constraint(lprec, c(0, 0, 20, 0, 0, 15, 0, 0, 12), "<=", 5000)   # Plant 3
+
+# Sales limits
+add.constraint(lprec, c(1, 1, 1, 0, 0, 0, 0, 0, 0), "<=", 900)   # Large
+add.constraint(lprec, c(0, 0, 0, 1, 1, 1, 0, 0, 0), "<=", 1200)  # Medium
+add.constraint(lprec, c(0, 0, 0, 0, 0, 0, 1, 1, 1), "<=", 750)   # Small
+
+# Equal % Capacity constraints
+
+add.constraint(lprec, c(900, -750, 0, 900, -750, 0, 900, -750, 0), "=", 0)
+add.constraint(lprec, c(450, 0, -750, 450, 0, -750, 450, 0, -750), "=", 0)
+
+# Set bounds (non-negative)
+set.bounds(lprec, lower = rep(0, 9))
+
+lprec
+
+# Solve and output results
+solve(lprec)                 
+get.objective(lprec)      # get objective value
+get.variables(lprec)      # get values of decision variables
+get.constraints(lprec)    # get constraints RHS values
 ```
 
-## Including Plots
-
-You can also embed plots, for example:
-
-```{r pressure, echo=FALSE}
-plot(pressure)
+```{r}
+x <-read.lp("WeigeIt.lp")   # Creates an lp object from reading file assign to x
+x                           # displays x
 ```
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+Solve the lp model
+```{r}
+solve(x)
+get.objective(x)     # get objective value
+get.variables(x)     # get values of decision variables
+get.constraints(x)   # get constraints RHS values
+```

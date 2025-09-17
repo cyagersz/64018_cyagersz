@@ -1,0 +1,15 @@
+/* Objective function */
+max: +420 x1L +420 x2L +420 x3L +360 x1M +360 x2M +360 x3M +300 x1S +300 x2S +300 x3S;
+
+/* Constraints */
+R1: +x1L +x1M +x1S <= 750;
+R2: +x2L +x2M +x2S <= 900;
+R3: +x3L +x3M +x3S <= 450;
+R4: +20 x1L +15 x1M +12 x1S <= 13000;
+R5: +20 x2L +15 x2M +12 x2S <= 12000;
+R6: +20 x3L +15 x3M +12 x3S <= 5000;
+R7: +x1L +x2L +x3L <= 900;
+R8: +x1M +x2M +x3M <= 1200;
+R9: +x1S +x2S +x3S <= 750;
+R10: +900 x1L -750 x2L +900 x1M -750 x2M +900 x1S -750 x2S = 0;
+R11: +450 x1L -750 x3L +450 x1M -750 x3M +450 x1S -750 x3S = 0;
