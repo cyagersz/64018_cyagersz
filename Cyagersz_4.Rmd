@@ -52,6 +52,7 @@ get.variables(lprec)      # get values of decision variables
 get.constraints(lprec)    # get constraints RHS values
 ```
 
+Solving with creating my own lp file
 ```{r}
 x <-read.lp("WeigeIt.lp")   # Creates an lp object from reading file assign to x
 x                           # displays x
