@@ -473,6 +473,7 @@ solve(lprec)                 </code></pre>
 <pre><code>##  [1]  6.944444e+02  8.333333e+02  4.166667e+02  1.300000e+04  1.200000e+04
 ##  [6]  5.000000e+03  5.166667e+02  8.444444e+02  5.833333e+02 -2.037268e-10
 ## [11]  0.000000e+00</code></pre>
+<p>Solving with creating my own lp file</p>
 <pre class="r"><code>x &lt;-read.lp(&quot;WeigeIt.lp&quot;)   # Creates an lp object from reading file assign to x
 x                           # displays x</code></pre>
 <pre><code>## Model name: 
@@ -489,6 +490,19 @@ x                           # displays x</code></pre>
 <pre><code>##  [1]  6.944444e+02  8.333333e+02  4.166667e+02  1.300000e+04  1.200000e+04
 ##  [6]  5.000000e+03  5.166667e+02  8.444444e+02  5.833333e+02 -2.037268e-10
 ## [11]  0.000000e+00</code></pre>
+</div>
+<div id="interpretation-of-results" class="section level2">
+<h2>Interpretation of Results</h2>
+<p>The model determined the optimal production quantities to maximize
+profit under the given constraints.</p>
+<ul>
+<li>Plant 1 produces: 516.6667 large, 0 medium, 0 small</li>
+<li>Plant 2 produces: 177.7778 large, 666.6667 medium, 0 small</li>
+<li>Plant 3 produces: 0 large, 166.6667 medium, 416.6667 small</li>
+<li>Total profit: $690000</li>
+</ul>
+<p>This solution helps management make informed decisions on production
+planning for the new product line.</p>
 </div>
 
 
