@@ -1,0 +1,87 @@
+---
+title: "Cyagersz_6"
+author: "Cole Yagersz"
+output: html_document
+---
+
+## Introduction
+The purpose of this assignment is to solve a linear programming problem using the Transportation Model.
+
+```{r}
+library("lpSolveAPI")   # loads the lp solve library
+```
+
+```{r}
+lprec <- make.lp(0,6)   # make an lp object with 6 decision variables and 0 constraints
+
+set.objfn(lprec,c(622,614,630,641,645,649))   #create the objective function
+
+lp.control(lprec,sense='min')
+
+# Plant capacity constraints
+add.constraint(lprec, c(1, 1, 1, 0, 0, 0), "<=", 100)   # Plant A
+add.constraint(lprec, c(0, 0, 0, 1, 1, 1), "<=", 120)  # Plant B
+
+# Storage space constraints
+add.constraint(lprec, c(1, 0, 0, 1, 0, 0), "=", 80)  # Warehouse 1 demand
+add.constraint(lprec, c(0, 1, 0, 0, 1, 0), "=", 60)  # Warehouse 2 demand
+add.constraint(lprec, c(0, 0, 1, 0, 0, 1), "=", 70)  # Warehouse 3 demand
+
+
+
+# Set bounds (non-negative)
+set.bounds(lprec, lower = rep(0, 6))
+
+write.lp(lprec,filename = "Transportation.lp", type ="lp")
+lprec
+
+# Solve and output results
+solve(lprec)                 
+get.objective(lprec)      # get objective value
+get.variables(lprec)      # get values of decision variables
+get.constraints(lprec)    # get constraints RHS values
+```
+
+Solving with creating my own lp file
+```{r}
+x <-read.lp("HeartStart.lp")   # Creates an lp object from reading file assign to x
+x                           # displays x
+```
+Solve the lp model
+```{r}
+solve(x)
+get.objective(x)     # get objective value
+get.variables(x)     # get values of decision variables
+get.constraints(x)   # get constraints RHS values
+```
+
+## Interpretation of Results
+
+The transportation model for Heart Start’s AED production and distribution was solved to minimize the combined production and shipping costs while satisfying plant capacities and warehouse demands.
+
+Optimal Total Cost:
+The minimum total cost to produce and ship AEDs from the two plants to the three warehouses is $132,790. This cost includes both production and shipping expenses.
+
+Production and Shipping Quantities:
+The optimal shipment plan from plants to warehouses is:
+
+Plant → Warehouse	Warehouse 1	Warehouse 2	Warehouse 3	Total Units Produced
+Plant A	              0	         60	          40	           100
+Plant B	              80	        0	          30	           110
+
+Capacity and Demand Constraints:
+Plant A produces and ships 100 units, fully utilizing its monthly production capacity.
+Plant B produces and ships 110 units, which is within its capacity of 120 units.
+
+Each warehouse’s monthly demand is fully met:
+Warehouse 1: 80 units from plant B
+Warehouse 2: 60 units from plant A
+Warehouse 3: 70 units /40 from plant A and 30 from plant B
+
+Interpretation of Shipment Plan:
+Plant A focuses on shipping to Warehouses 2 and 3 likely because it is cheaper for plant A to produce and ship them.
+Plant B ships to Warehouse 1 and some to Warehouse 3
+No shipments are made from Plant A to Warehouse 1 or from Plant B to Warehouse 2, Showing that these are not as cost effective.
+
+Summary:
+The solution shows a cost-efficient distribution strategy that meets all demand and capacity constraints while minimizing overall costs. The company should fully utilize Plant A's capacity by supplying Warehouses 2 and 3, and use Plant B primarily for Warehouse 1 and part of Warehouse 3 demand.
