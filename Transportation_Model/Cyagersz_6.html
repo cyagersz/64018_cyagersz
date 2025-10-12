@@ -473,26 +473,57 @@ solve(lprec)                 </code></pre>
 <pre class="r"><code>x &lt;-read.lp(&quot;HeartStart.lp&quot;)   # Creates an lp object from reading file assign to x
 x                           # displays x</code></pre>
 <pre><code>## Model name: 
-##            xA1   xA2   xA3   xB1   xB2   xB3  xB1L         
-## Minimize   622   614   630   641   645   649     0         
-## Supply_A     1     1     1     0     0     0     0  &lt;=  100
-## Supply_B     0     0     0     1     1     1     0  &lt;=  120
-## Demand_1     1     0     0     1     0     0     0   =   80
-## Demand_2     0     1     0     0     1     0     0   =   60
-## Demand_3     0     0     1     0     0     1     0   =   70
-## Kind       Std   Std   Std   Std   Std   Std   Std         
-## Type      Real  Real  Real  Real  Real  Real  Real         
-## Upper      Inf   Inf   Inf   Inf   Inf   Inf   Inf         
-## Lower        0     0     0     0     0     0     0</code></pre>
+##            xA1   xA2   xA3   xB1   xB2   xB3         
+## Minimize   622   614   630   641   645   649         
+## Supply_A     1     1     1     0     0     0  &lt;=  100
+## Supply_B     0     0     0     1     1     1  &lt;=  120
+## Demand_1     1     0     0     1     0     0   =   80
+## Demand_2     0     1     0     0     1     0   =   60
+## Demand_3     0     0     1     0     0     1   =   70
+## Kind       Std   Std   Std   Std   Std   Std         
+## Type      Real  Real  Real  Real  Real  Real         
+## Upper      Inf   Inf   Inf   Inf   Inf   Inf         
+## Lower        0     0     0     0     0     0</code></pre>
 <p>Solve the lp model</p>
 <pre class="r"><code>solve(x)</code></pre>
 <pre><code>## [1] 0</code></pre>
 <pre class="r"><code>get.objective(x)     # get objective value</code></pre>
 <pre><code>## [1] 132790</code></pre>
 <pre class="r"><code>get.variables(x)     # get values of decision variables</code></pre>
-<pre><code>## [1]  0 60 40 80  0 30  0</code></pre>
+<pre><code>## [1]  0 60 40 80  0 30</code></pre>
 <pre class="r"><code>get.constraints(x)   # get constraints RHS values</code></pre>
 <pre><code>## [1] 100 110  80  60  70</code></pre>
+</div>
+<div id="interpretation-of-results" class="section level2">
+<h2>Interpretation of Results</h2>
+<p>The transportation model for Heart Start’s AED production and
+distribution was solved to minimize the combined production and shipping
+costs while satisfying plant capacities and warehouse demands.</p>
+<p>Optimal Total Cost: The minimum total cost to produce and ship AEDs
+from the two plants to the three warehouses is $132,790. This cost
+includes both production and shipping expenses.</p>
+<p>Production and Shipping Quantities: The optimal shipment plan from
+plants to warehouses is:</p>
+<p>Plant → Warehouse Warehouse 1 Warehouse 2 Warehouse 3 Total Units
+Produced</p>
+<p>Plant A 0 60 40 100</p>
+<p>Plant B 80 0 30 110</p>
+<p>Capacity and Demand Constraints: Plant A produces and ships 100
+units, fully utilizing its monthly production capacity. Plant B produces
+and ships 110 units, which is within its capacity of 120 units.</p>
+<p>Each warehouse’s monthly demand is fully met: Warehouse 1: 80 units
+from plant B Warehouse 2: 60 units from plant A Warehouse 3: 70 units
+/40 from plant A and 30 from plant B</p>
+<p>Interpretation of Shipment Plan: Plant A focuses on shipping to
+Warehouses 2 and 3 likely because it is cheaper for plant A to produce
+and ship them. Plant B ships to Warehouse 1 and some to Warehouse 3 No
+shipments are made from Plant A to Warehouse 1 or from Plant B to
+Warehouse 2, Showing that these are not as cost effective.</p>
+<p>Summary: The solution shows a cost-efficient distribution strategy
+that meets all demand and capacity constraints while minimizing overall
+costs. The company should fully utilize Plant A’s capacity by supplying
+Warehouses 2 and 3, and use Plant B primarily for Warehouse 1 and part
+of Warehouse 3 demand.</p>
 </div>
 
 
