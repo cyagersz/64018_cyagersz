@@ -22,7 +22,7 @@ library("Benchmarking") # loads the library for the DEA Model
 
 ```{r}
 
-x <- matrix(c(150,400, 320, 520, 350, 320,200,700,1200,2000,1200,700),ncol=2)
+x <- matrix(c(150,400, 320, 520, 350, 320,200,700,1200,2000,1200,700),ncol=2) # Convert Supplies because it is in thousands per Day
 y <- matrix(c(14000, 14000, 42000, 28000, 19000, 14000,3500, 21000, 10500, 42000, 25000, 15000),ncol=2)
 colnames(y) <- c("Reimbursed","Privately Paid")
 colnames(x) <- c("Staff Hours per Day","Supplies per Day")
@@ -30,7 +30,7 @@ colnames(x) <- c("Staff Hours per Day","Supplies per Day")
 x
 y
 ```
-
+Questions 1&2:
 ```{r}
 dea_crs <- dea(x,y,RTS ="crs")
 print(dea_crs)
@@ -39,7 +39,7 @@ print(lambda(dea_crs))
 dea.plot.transform(y[,1], y[,2], RTS = "crs") 
 
 ```
-
+For CRS (constant return to scale) we found that both DMU 5 and 6 are inefficient.We see that DMU 5 is only 97.75% efficient, and DMU 6 is 86.75% efficient. The peers for both of them are 1,2,and 4.
 ```{r}
 dea_vrs <- dea(x,y,RTS ="vrs")
 print(dea_vrs)
@@ -49,6 +49,7 @@ print(lambda(dea_vrs))
 dea.plot.transform(y[,1], y[,2], RTS = "vrs")
 
 ```
+For VRS (varying return to scale) we found that only DMU 6 is inefficient with a 89.63% efficiency.Its peers are 1,2,and 5.
 
 ```{r}
 dea_irs <- dea(x,y,RTS ="irs")
@@ -58,7 +59,7 @@ print(lambda(dea_irs))
 
 dea.plot.transform(y[,1], y[,2], RTS = "irs")
 ```
-
+For IRS (increasing return to scale) we found that DMU 6 is inefficient with a efficiency of 89.63% the same as VRS.Its peers are 1,2,and 5.
 ```{r}
 dea_drs <- dea(x,y,RTS ="drs")
 print(dea_drs)
@@ -67,7 +68,7 @@ print(lambda(dea_drs))
 
 dea.plot.transform(y[,1], y[,2], RTS = "drs")
 ```
-
+For DRS (decreasing return to scale) we found that DMU 5 and DMU 6 are inefficient. DMU 5 has a efficiency of 97.75%. DMU 6 has a efficiency of 86.75%. The peers for both of them are 1,2,and 4.
 ```{r}
 dea_fdh <- dea(x,y,RTS ="fdh")
 print(dea_fdh)
@@ -76,23 +77,38 @@ print(lambda(dea_fdh))
 
 dea.plot.transform(y[,1], y[,2], RTS = "fdh")
 ```
-
+For FDH (Free Disposal Hull) we found that all the DMU are efficient.
 
 ```{r}
-dea_frh <- dea(x,y,RTS = "add")
+dea_frh <- dea(x,y,RTS = "add") # Uses add because FRH is not supported by Benchmarking Library
 print(dea_frh)
 print(peers(dea_frh))
 print(lambda(dea_frh))
+#No Plot model available for FRH
+```
+For FRH (Free Disposal Hull with Returns to Scale) we found that all the DMU are efficient just like FDH.
+Question 3:
+```{r}
+DMU_eff <- paste("Facility",1:6)
 
-dea.plot.transform(y[,1], y[,2], RTS = "add")
+efficiency_table <- data.frame(
+  DMU = DMU_eff,
+  CRS = efficiencies(dea_crs),
+  VRS = efficiencies(dea_vrs),
+  IRS = efficiencies(dea_irs),
+  DRS = efficiencies(dea_drs),
+  FDH = efficiencies(dea_fdh),
+  FRH = efficiencies(dea_frh)
+)
+
+print(efficiency_table)
+
 ```
 
+Question 4:
+Comparison and Contrast of DEA Results:
 
-
-
-
-
-
+The CRS and DRS models indicate that Facilities 5 and 6 are inefficient showing scale effects are important in these assumptions. VRS and IRS models, which allow variable and increasing returns to scale respectively only show Facility 6 as inefficient. The FDH and Additive/FRH models find all facilities to be efficient due to their non-convex technology assumptions. This comparison shows how the choice of DEA model influences the interpretation of efficiency, reflecting different operational and scale conditions in the nursing homes
 
 
 
