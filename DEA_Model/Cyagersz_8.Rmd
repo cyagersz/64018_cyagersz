@@ -1,5 +1,104 @@
 ---
 title: "Cyagersz_8"
+author: "Cole Yagersz"
 output: html_document
 ---
+
+## Introduction
+The Hope Valley Health Care Association owns and operates six nursing homes in adjoining
+states. An evaluation of their efficiency has been undertaken using two inputs and two outputs.The inputs are staffing labor (measured in average hours per day) and the cost of supplies (in thousands of dollars per day). The outputs are the number of patient-days reimbursed by third-party sources and the number of patient-days reimbursed privately.
+Questions:
+1. Formulate and perform DEA analysis under all DEA assumptions of FDH, CRS, VRS,
+IRS, DRS, and FRH.
+2. Determine the Peers and Lambdas under each of the above assumptions
+3. Summarize your results in a tabular format
+4. Compare and contrast the above results
+
+
+```{r}
+library("lpSolveAPI")   # loads the lp solve library
+library("Benchmarking") # loads the library for the DEA Model
+```
+
+```{r}
+
+x <- matrix(c(150,400, 320, 520, 350, 320,200,700,1200,2000,1200,700),ncol=2)
+y <- matrix(c(14000, 14000, 42000, 28000, 19000, 14000,3500, 21000, 10500, 42000, 25000, 15000),ncol=2)
+colnames(y) <- c("Reimbursed","Privately Paid")
+colnames(x) <- c("Staff Hours per Day","Supplies per Day")
+
+x
+y
+```
+
+```{r}
+dea_crs <- dea(x,y,RTS ="crs")
+print(dea_crs)
+print(peers(dea_crs))
+print(lambda(dea_crs))
+dea.plot(x,y,RTS="crs",ORIENTATION = "in-out",txt=LETTERS[1:6])
+```
+
+```{r}
+dea_vrs <- dea(x,y,RTS ="vrs")
+print(dea_vrs)
+print(peers(dea_vrs))
+print(lambda(dea_vrs))
+
+dea.plot(x,y,RTS="vrs",ORIENTATION = "in-out",txt=LETTERS[1:6])
+
+```
+
+```{r}
+dea_irs <- dea(x,y,RTS ="irs")
+print(dea_irs)
+print(peers(dea_irs))
+print(lambda(dea_irs))
+
+dea.plot(x,y,RTS="irs",ORIENTATION = "in-out",txt=LETTERS[1:6])
+```
+
+```{r}
+dea_drs <- dea(x,y,RTS ="drs")
+print(dea_drs)
+print(peers(dea_drs))
+print(lambda(dea_drs))
+
+dea.plot(x,y,RTS="drs",ORIENTATION = "in-out",txt=LETTERS[1:6])
+```
+
+```{r}
+dea_fdh <- dea(x,y,RTS ="fdh")
+print(dea_fdh)
+print(peers(dea_fdh))
+print(lambda(dea_fdh))
+
+dea.plot(x,y,RTS="fdh",ORIENTATION = "in-out",txt=LETTERS[1:6])
+```
+
+
+```{r}
+dea_frh <- dea(x,y,RTS = "add")
+print(dea_frh)
+print(peers(dea_frh))
+print(lambda(dea_frh))
+
+dea.plot(x,y,RTS="add",ORIENTATION = "in-out",txt=LETTERS[1:6])
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
