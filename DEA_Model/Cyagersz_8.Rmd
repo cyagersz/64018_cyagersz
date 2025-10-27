@@ -131,7 +131,7 @@ print(efficiency_table)
 Question 4:
 Comparison and Contrast of DEA Results:
 
-The CRS and DRS models indicate that Facilities 5 and 6 are inefficient showing scale effects are important in these assumptions. VRS and IRS models, which allow variable and increasing returns to scale respectively only show Facility 6 as inefficient. The FDH and Additive/FRH models find all facilities to be efficient due to their non-convex technology assumptions. This comparison shows how the choice of DEA model influences the interpretation of efficiency, reflecting different operational and scale conditions in the nursing homes
+The CRS and DRS models indicate that Facilities 5 and 6 are inefficient showing scale effects are important in these assumptions. VRS and IRS models, which allow variable and increasing returns to scale respectively only show Facility 6 as inefficient. The FDH and Additive/FRH models find all facilities to be efficient due to their non-convex technology assumptions. This comparison shows how the choice of DEA model influences the interpretation of efficiency, reflecting different operational and scale conditions in the nursing homes.
 
 
 
