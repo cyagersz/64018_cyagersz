@@ -47,6 +47,7 @@ print(lambda(dea_crs))
 dea.plot(x, y, RTS = "crs", ORIENTATION = "in-out", txt = rownames(x))
 
 ```
+
 For CRS (constant return to scale) we found that both DMU 5 and 6 are inefficient.We see that DMU 5 is only 97.75% efficient, and DMU 6 is 86.75% efficient. The peers for both of them are 1,2,and 4.
 ```{r}
 cat("VRS:\n")
@@ -58,6 +59,7 @@ print(lambda(dea_vrs))
 dea.plot(x, y, RTS = "vrs", ORIENTATION = "in-out", txt = rownames(x))
 
 ```
+
 For VRS (varying return to scale) we found that only DMU 6 is inefficient with a 89.63% efficiency.Its peers are 1,2,and 5.
 
 ```{r}
@@ -69,6 +71,7 @@ print(lambda(dea_irs))
 
 dea.plot(x, y, RTS = "irs", ORIENTATION = "in-out", txt = rownames(x))
 ```
+
 For IRS (increasing return to scale) we found that DMU 6 is inefficient with a efficiency of 89.63% the same as VRS.Its peers are 1,2,and 5.
 ```{r}
 cat("DRS:\n")
@@ -79,6 +82,7 @@ print(lambda(dea_drs))
 
 dea.plot(x, y, RTS = "drs", ORIENTATION = "in-out", txt = rownames(x))
 ```
+
 For DRS (decreasing return to scale) we found that DMU 5 and DMU 6 are inefficient. DMU 5 has a efficiency of 97.75%. DMU 6 has a efficiency of 86.75%. The peers for both of them are 1,2,and 4.
 ```{r}
 cat("FDH:\n")
@@ -89,6 +93,7 @@ print(lambda(dea_fdh))
 
 dea.plot(x, y, RTS = "fdh", ORIENTATION = "in-out", txt = rownames(x))
 ```
+
 For FDH (Free Disposal Hull) we found that all the DMU are efficient.
 
 ```{r}
@@ -100,7 +105,10 @@ print(lambda(dea_frh))
 
 dea.plot(x, y, RTS = "add", ORIENTATION = "in-out", txt = rownames(x))
 ```
+
 For FRH (Free Disposal Hull with Returns to Scale) we found that all the DMU are efficient just like FDH.
+
+
 Question 3:
 ```{r}
 DMU_eff <- paste("Facility",1:6)
@@ -118,6 +126,7 @@ efficiency_table <- data.frame(
 print(efficiency_table)
 
 ```
+
 
 Question 4:
 Comparison and Contrast of DEA Results:
