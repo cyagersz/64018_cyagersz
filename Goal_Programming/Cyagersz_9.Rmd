@@ -1,0 +1,115 @@
+---
+title: "Cyagersz_9"
+author: "Cole Yagersz"
+output: html_document
+---
+
+## Introduction
+
+The Research and Development Division of the Emax Corporation has developed three new
+products. A decision now needs to be made on which mix of these products should be produced.
+Management wants primary consideration given to three factors: total profit, stability in the
+workforce, and achieving an increase in the company’s earnings next year from the $75 million
+achieved this year. In particular, using the units given in the following table, they want to
+
+Maximize Z = P - 6C - 3D, where
+
+P = total (discounted) profit over the life of the new products,
+
+C = change (in either direction) in the current level of employment,
+
+D = decrease (if any) in next year’s earnings from the current year’s level.
+
+The amount of any increase in earnings does not enter into Z, because management is concerned
+primarily with just achieving some increase to keep the stockholders happy. (It has mixed
+feelings about a large increase that then would be difficult to surpass in subsequent years.)
+
+
+
+## Question 1
+Define y1+ and y1-, respectively, as the amount over (if any) and the amount under (if any)
+the employment level goal. Define y2+ and y2- in the same way for the goal regarding
+earnings next year. Define x1, x2, and x3 as the production rates of Products 1, 2, and 3,
+respectively. With these definitions, use the goal programming technique to express y1+,
+y1- , y2+ and y2- algebraically in terms of x1, x2, and x3. Also express P in terms of x1, x2,and x3.
+
+
+Let:
+x1,x2,x3 = production rates for products 1,2,and 3.
+y1+,y1-  = deviations over and under employment level.
+y2+,y2-  = deviations over and under earnings goal.
+P = 20x1 + 15x2 + 25x3
+
+So the algebraic relations will be 
+
+Total Profit: P = 20x1 + 15x2 + 25x3 The goal is to maximize.
+
+Employment Level: 6x1 + 4x2 + 5x3 + y1- - y1+ = 50 
+
+Earnings Next Year: 8x1 + 7x2 + 5x3 + y2- - y2+ = 75
+
+
+
+## Question 2
+Express management’s objective function in terms of x1, x2, x3, y1+, y1- , y2+ and y2-.
+
+The management's objective function is they wan to maximize Z = P - 6C - 3D which can be shown in terms of x1, x2, x3, y1+, y1- , y2+ and y2- like this 
+
+y1+ = y1p (employment over target)
+
+y1- = y1m (employment under target)
+
+y2+ = y2p (earnings above goal)
+
+y2- = y2m (earnings below goal)
+
+Objective:
+
+max: 20x1 + 15x2 + 25x3 - 6y1p - 6y1m - 3y2m
+
+
+## Question 3
+
+```{r}
+library(lpSolveAPI)
+rd <- read.lp("Research_and_Development_Division.lp")
+rd
+
+solve(rd)
+
+cat("Objective Value (Z):", get.objective(rd), "\n")
+cat("Variable Values:\n")
+print(get.variables(rd))
+```
+
+## Interpretation 
+
+Production Mix:
+
+Based off the results of the LP model production of product 3 with 15 units is the optimal solution. Products 1 and 2 are not being produced because product 3 yields the best trade off between profit, employment, and earnings. 
+
+Employment: 
+
+Target = 50 
+
+Actual = 6(0) + 4(0) +5(15) = 75 
+
+That's 25 over the goal. Which is the y1p = 25
+
+Earnings:
+
+Target = 75
+
+Actual = 8(0) + 7(0) + 5(15) = 75
+
+This meets it goal exactly so y2m = y2p = 0
+
+Profit:
+
+P = 20(0) + 15(0) +25(15) = 375
+
+Objective Value:
+
+Z = 20(0) + 15(0) +25(15) - 6(25) - 6(0) - 3(0) = 225
+
+This matches up with the Objective Value obtained from the model.
