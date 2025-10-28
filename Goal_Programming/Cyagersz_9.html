@@ -400,7 +400,12 @@ y1- , y2+ and y2-.</p>
 <p>The management’s objective function is they wan to maximize Z = P -
 6C - 3D which can be shown in terms of x1, x2, x3, y1+, y1- , y2+ and
 y2- like this</p>
-<p>max: 20x1 + 15x2 + 25x3 - 6y1+ - 6y1- - 3y2-;</p>
+<p>y1+ = y1p (employment over target)</p>
+<p>y1- = y1m (employment under target)</p>
+<p>y2+ = y2p (earnings above goal)</p>
+<p>y2- = y2m (earnings below goal)</p>
+<p>Objective:</p>
+<p>max: 20x1 + 15x2 + 25x3 - 6y1p - 6y1m - 3y2m</p>
 </div>
 <div id="question-3" class="section level2">
 <h2>Question 3</h2>
@@ -424,7 +429,27 @@ rd</code></pre>
 <pre><code>## Variable Values:</code></pre>
 <pre class="r"><code>print(get.variables(rd))</code></pre>
 <pre><code>## [1]  0  0 15  0 25  0  0</code></pre>
-<p>The findings I found from the Lp model is</p>
+</div>
+<div id="interpretation" class="section level2">
+<h2>Interpretation</h2>
+<p>Production Mix:</p>
+<p>Based off the results of the LP model production of product 3 with 15
+units is the optimal solution. Products 1 and 2 are not being produced
+because product 3 yields the best trade off between profit, employment,
+and earnings.</p>
+<p>Employment:</p>
+<p>Target = 50</p>
+<p>Actual = 6(0) + 4(0) +5(15) = 75</p>
+<p>That’s 25 over the goal. Which is the y1p = 25</p>
+<p>Earnings:</p>
+<p>Target = 75</p>
+<p>Actual = 8(0) + 7(0) + 5(15) = 75</p>
+<p>This meets it goal exactly so y2m = y2p = 0</p>
+<p>Profit:</p>
+<p>P = 20(0) + 15(0) +25(15) = 375</p>
+<p>Objective Value:</p>
+<p>Z = 20(0) + 15(0) +25(15) - 6(25) - 6(0) - 3(0) = 225</p>
+<p>This matches up with the Objective Value obtained from the model.</p>
 </div>
 
 
