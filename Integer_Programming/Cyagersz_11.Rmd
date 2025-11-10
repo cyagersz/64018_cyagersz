@@ -1,0 +1,14 @@
+---
+title: "Cyagersz_11"
+author: "Cole Yagersz"
+output: html_document
+---
+
+## Introduction
+
+AP is a shipping service that guarantees overnight delivery of packages in the continental US.
+The company has various hubs at major cities and airports across the country. Packages are
+received at hubs, and then shipped to intermediate hubs or to their final destination.
+The manager of the AP hub in Cleveland is concerned about labor costs, and is interested in
+determining the most effective way to schedule workers. The hub operates seven days a week,
+and the number of packages it handles varies from one day to another.
