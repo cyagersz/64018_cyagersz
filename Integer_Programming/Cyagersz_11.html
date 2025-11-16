@@ -358,13 +358,16 @@ display: none;
 <div id="introduction" class="section level2">
 <h2>Introduction</h2>
 <p>AP is a shipping service that guarantees overnight delivery of
-packages in the continental US. The company has various hubs at major
+packages in the continental US.The company has various hubs at major
 cities and airports across the country. Packages are received at hubs,
 and then shipped to intermediate hubs or to their final destination. The
 manager of the AP hub in Cleveland is concerned about labor costs, and
 is interested in determining the most effective way to schedule workers.
 The hub operates seven days a week, and the number of packages it
-handles varies from one day to another.</p>
+handles varies from one day to another.Package handlers at AP are
+guaranteed a five-day work week with two consecutive days off. The base
+wage for the handlers is $750 per week. Workers working on Saturday or
+Sunday receive an additional $25 per day.</p>
 <pre class="r"><code># Load library
 library(lpSolve)
 library(lpSolveAPI)
@@ -387,8 +390,8 @@ rd</code></pre>
 ## Lower        0    0    0    0    0    0    0</code></pre>
 <pre class="r"><code>solve(rd)</code></pre>
 <pre><code>## [1] 0</code></pre>
-<pre class="r"><code>cat(&quot;Objective Value (Z):&quot;, get.objective(rd), &quot;\n&quot;)</code></pre>
-<pre><code>## Objective Value (Z): 25675</code></pre>
+<pre class="r"><code>cat(&quot;Objective Value:&quot;, get.objective(rd), &quot;\n&quot;)</code></pre>
+<pre><code>## Objective Value: 25675</code></pre>
 <pre class="r"><code>cat(&quot;Variable Values:\n&quot;)</code></pre>
 <pre><code>## Variable Values:</code></pre>
 <pre class="r"><code>print(get.variables(rd))</code></pre>
