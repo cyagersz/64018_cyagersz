@@ -1,5 +1,377 @@
 ---
 title: "Final_Assignment"
+author: "Cole Yagersz"
 output: html_document
 ---
 
+
+## Introduction
+
+Problem Description
+
+The City of Lakeshore (a mid-sized Midwestern city similar to Cleveland, OH) operates an emergency medical services system serving approximately 385,000 residents across 78 square miles. The EMS department needs to optimize its staff scheduling to minimize costs while maintaining mandated response time standards.
+
+Your Task: Create a staff schedule for one week that:
+
+● Minimizes total labor cost
+
+● Covers each day's peak shift requirements
+
+● Respects basic work rules
+
+● Maintains required skill mix
+
+Key Simplification: Instead of multiple shifts and complex patterns, you're assigning staff to work or not work on each day's single peak shift
+
+
+## Problem Formulation
+
+Write out the complete LP formulation:
+
+● Define all variables clearly
+
+● State objective function with actual coefficients
+
+● List ALL constraints with proper notation
+
+● Show the constraint matrix structure
+
+
+
+Variables:
+
+S = Set of all staff
+
+S = {P1,P2,P3,P4,E1,E2,E3,E4,E5,E6,E7,E8}
+
+P = Set of paramedics
+
+P = {P1,P2,P3,P4}
+
+E = Set of EMT-Basics
+
+E = {E1,E2,E3,E4,E5,E6,E7,E8}
+
+D = Days of Week
+
+D = {Mon,Tue,Wed,Thu,Fri,Sat,Sun}
+
+
+Objective Function:
+
+Min Z = 250 (xP1Mon + xP2Mon + xP3Mon + xP4Mon) 
++ 250 (xP1Tue + xP2Tue + xP3Tue + xP4Tue)
++ 250 (xP1Wed + xP2Wed + xP3Wed + xP4Wed) 
++ 250(xP1Thu + xP2Thu + xP3Thu + xP4Thu) 
++ 250(xP1Fri + xP2Fri + xP3Fri + xP4Fri) 
++ 300(xP1Sat + xP2Sat + xP3Sat + xP4Sat)
++ 300(xP1Sun + xP2Sun + xP3Sun + xP4Sun) 
++ 180(xE1Mon + xE2Mon + xE3Mon + xE4Mon + xE5Mon + xE6Mon + xE7Mon + xE8Mon)
++ 180(xE1Tue + xE2Tue + xE3Tue + xE4Tue + xE5Tue + xE6Tue + xE7Tue + xE8Tue) 
++ 180(xE1Wed + xE2Wed + xE3Wed + xE4Wed + xE5Wed + xE6Wed + xE7Wed + xE8Wed)
++ 180(xE1Thu + xE2Thu + xE3Thu + xE4Thu + xE5Thu + xE6Thu + xE7Thu + xE8Thu)
++ 180(xE1Fri + xE2Fri + xE3Fri + xE4Fri + xE5Fri + xE6Fri + xE7Fri + xE8Fri)
++ 220(xE1Sat + xE2Sat + xE3Sat + xE4Sat + xE5Sat + xE6Sat + xE7Sat + xE8Sat)
++ 220(xE1Sun + xE2Sun + xE3Sun + xE4Sun + xE5Sun + xE6Sun + xE7Sun + xE8Sun)
+
+
+Constraints:
+
+Daily Minimum Staffing requirements
+
+Monday: xP1Mon + xP2Mon + xP3Mon + xP4Mon + xE1Mon + xE2Mon + xE3Mon + xE4Mon + xE5Mon + xE6Mon + xE7Mon + xE8Mon >=6
+
+Tuesday: xP1Tue + xP2Tue + xP3Tue + xP4Tue + xE1Tue + xE2Tue + xE3Tue + xE4Tue + xE5Tue + xE6Tue + xE7Tue + xE8Tue >=6
+
+Wednesday: xP1Wed + xP2Wed + xP3Wed + xP4Wed + xE1Wed + xE2Wed + xE3Wed + xE4Wed + xE5Wed + xE6Wed + xE7Wed + xE8Wed >=8
+
+Thursday: xP1Thu + xP2Thu + xP3Thu + xP4Thu + xE1Thu + xE2Thu + xE3Thu + xE4Thu + xE5Thu + xE6Thu + xE7Thu + xE8Thu >=8
+
+Friday: xP1Fri + xP2Fri + xP3Fri + xP4Fri + xE1Fri + xE2Fri + xE3Fri + xE4Fri + xE5Fri + xE6Fri + xE7Fri + xE8Fri >=10
+
+Saturday: xP1Sat + xP2Sat + xP3Sat + xP4Sat + xE1Sat + xE2Sat + xE3Sat + xE4Sat + xE5Sat + xE6Sat + xE7Sat + xE8Sat >=8
+
+Sunday: xP1Sun + xP2Sun + xP3Sun + xP4Sun + xE1Sun + xE2Sun + xE3Sun + xE4Sun + xE5Sun + xE6Sun + xE7Sun + xE8Sun >=8
+
+
+Daily Minimum Paramedics requirements
+
+PMonday: xP1Mon + xP2Mon + xP3Mon + xP4Mon >=2
+
+PTuesday: xP1Tue + xP2Tue + xP3Tue + xP4Tue >=2
+
+PWednesday: xP1Wed + xP2Wed + xP3Wed + xP4Wed >=3
+
+PThursday: xP1Thu + xP2Thu + xP3Thu + xP4Thu >=3
+
+PFriday: xP1Fri + xP2Fri + xP3Fri + xP4Fri >=4
+
+PSaturday: xP1Sat + xP2Sat + xP3Sat + xP4Sat >=3
+
+PSunday: xP1Sun + xP2Sun + xP3Sun + xP4Sun >=2
+
+
+Staff availability 
+
+Unavailable_P1_Sun: xP1Sun = 0
+
+Unavailable_P4_Mon: xP4Mon = 0
+
+Unavailable_P4_Tue: xP4Tue = 0
+
+Unavailable_E2_Sat: xE2Sat = 0
+
+Unavailable_E2_Sun: xE2Sun = 0
+
+Unavailable_E5_Fri: xE5Fri = 0
+
+
+
+Maximum 5 Shifts per Staff member/ Minimum 2 Days off requirement
+
+P1Shift: xP1Mon + xP1Tue + xP1Wed + xP1Thu + xP1Fri + xP1Sat + xP1Sun <= 5
+
+P2Shift: xP2Mon + xP2Tue + xP2Wed + xP2Thu + xP2Fri + xP2Sat + xP2Sun <= 5
+
+P3Shift: xP3Mon + xP3Tue + xP3Wed + xP3Thu + xP3Fri + xP3Sat + xP3Sun <= 5
+
+P4Shift: xP4Mon + xP4Tue + xP4Wed + xP4Thu + xP4Fri + xP4Sat + xP4Sun <= 5
+
+E1Shift: xE1Mon + xE1Tue + xE1Wed + xE1Thu + xE1Fri + xE1Sat + xE1Sun <= 5
+
+E2Shift: xE2Mon + xE2Tue + xE2Wed + xE2Thu + xE2Fri + xE2Sat + xE2Sun <= 5
+
+E3Shift: xE3Mon + xE3Tue + xE3Wed + xE3Thu + xE3Fri + xE3Sat + xE3Sun <= 5
+
+E4Shift: xE4Mon + xE4Tue + xE4Wed + xE4Thu + xE4Fri + xE4Sat + xE4Sun <= 5
+
+E5Shift: xE5Mon + xE5Tue + xE5Wed + xE5Thu + xE5Fri + xE5Sat + xE5Sun <= 5
+
+E6Shift: xE6Mon + xE6Tue + xE6Wed + xE6Thu + xE6Fri + xE6Sat + xE6Sun <= 5
+
+E7Shift: xE7Mon + xE7Tue + xE7Wed + xE7Thu + xE7Fri + xE7Sat + xE7Sun <= 5
+
+E8Shift: xE8Mon + xE8Tue + xE8Wed + xE8Thu + xE8Fri + xE8Sat + xE8Sun <= 5
+
+
+No more than 4 consecutive days requirement
+
+Consec4_P1_1: xP1Mon + xP1Tue + xP1Wed + xP1Thu + xP1Fri <= 4
+
+Consec4_P1_2: xP1Tue + xP1Wed + xP1Thu + xP1Fri + xP1Sat <= 4
+
+Consec4_P1_3: xP1Wed + xP1Thu + xP1Fri + xP1Sat + xP1Sun <= 4
+
+Consec4_P2_1: xP2Mon + xP2Tue + xP2Wed + xP2Thu + xP2Fri <= 4
+
+Consec4_P2_2: xP2Tue + xP2Wed + xP2Thu + xP2Fri + xP2Sat <= 4
+
+Consec4_P2_3: xP2Wed + xP2Thu + xP2Fri + xP2Sat + xP2Sun <= 4
+
+Consec4_P3_1: xP3Mon + xP3Tue + xP3Wed + xP3Thu + xP3Fri <= 4
+
+Consec4_P3_2: xP3Tue + xP3Wed + xP3Thu + xP3Fri + xP3Sat <= 4
+
+Consec4_P3_3: xP3Wed + xP3Thu + xP3Fri + xP3Sat + xP3Sun <= 4
+
+Consec4_P4_1: xP4Mon + xP4Tue + xP4Wed + xP4Thu + xP4Fri <= 4
+
+Consec4_P4_2: xP4Tue + xP4Wed + xP4Thu + xP4Fri + xP4Sat <= 4
+
+Consec4_P4_3: xP4Wed + xP4Thu + xP4Fri + xP4Sat + xP4Sun <= 4
+
+Consec4_E1_1: xE1Mon + xE1Tue + xE1Wed + xE1Thu + xE1Fri <= 4
+
+Consec4_E1_2: xE1Tue + xE1Wed + xE1Thu + xE1Fri + xE1Sat <= 4
+
+Consec4_E1_3: xE1Wed + xE1Thu + xE1Fri + xE1Sat + xE1Sun <= 4
+
+Consec4_E2_1: xE2Mon + xE2Tue + xE2Wed + xE2Thu + xE2Fri <= 4
+
+Consec4_E2_2: xE2Tue + xE2Wed + xE2Thu + xE2Fri + xE2Sat <= 4
+
+Consec4_E2_3: xE2Wed + xE2Thu + xE2Fri + xE2Sat + xE2Sun <= 4
+
+Consec4_E3_1: xE3Mon + xE3Tue + xE3Wed + xE3Thu + xE3Fri <= 4
+
+Consec4_E3_2: xE3Tue + xE3Wed + xE3Thu + xE3Fri + xE3Sat <= 4
+
+Consec4_E3_3: xE3Wed + xE3Thu + xE3Fri + xE3Sat + xE3Sun <= 4
+
+Consec4_E4_1: xE4Mon + xE4Tue + xE4Wed + xE4Thu + xE4Fri <= 4
+
+Consec4_E4_2: xE4Tue + xE4Wed + xE4Thu + xE4Fri + xE4Sat <= 4
+
+Consec4_E4_3: xE4Wed + xE4Thu + xE4Fri + xE4Sat + xE4Sun <= 4
+
+Consec4_E5_1: xE5Mon + xE5Tue + xE5Wed + xE5Thu + xE5Fri <= 4
+
+Consec4_E5_2: xE5Tue + xE5Wed + xE5Thu + xE5Fri + xE5Sat <= 4
+
+Consec4_E5_3: xE5Wed + xE5Thu + xE5Fri + xE5Sat + xE5Sun <= 4
+
+Consec4_E6_1: xE6Mon + xE6Tue + xE6Wed + xE6Thu + xE6Fri <= 4
+
+Consec4_E6_2: xE6Tue + xE6Wed + xE6Thu + xE6Fri + xE6Sat <= 4
+
+Consec4_E6_3: xE6Wed + xE6Thu + xE6Fri + xE6Sat + xE6Sun <= 4
+
+Consec4_E7_1: xE7Mon + xE7Tue + xE7Wed + xE7Thu + xE7Fri <= 4
+
+Consec4_E7_2: xE7Tue + xE7Wed + xE7Thu + xE7Fri + xE7Sat <= 4
+
+Consec4_E7_3: xE7Wed + xE7Thu + xE7Fri + xE7Sat + xE7Sun <= 4
+
+Consec4_E8_1: xE8Mon + xE8Tue + xE8Wed + xE8Thu + xE8Fri <= 4
+
+Consec4_E8_2: xE8Tue + xE8Wed + xE8Thu + xE8Fri + xE8Sat <= 4
+
+Consec4_E8_3: xE8Wed + xE8Thu + xE8Fri + xE8Sat + xE8Sun <= 4
+
+Binary Constraint
+
+xP1Mon, xP1Tue, xP1Wed, xP1Thu, xP1Fri, xP1Sat, xP1Sun ∈ {0,1}
+
+xP2Mon, xP2Tue, xP2Wed, xP2Thu, xP2Fri, xP2Sat, xP2Sun ∈ {0,1}
+
+xP3Mon, xP3Tue, xP3Wed, xP3Thu, xP3Fri, xP3Sat, xP3Sun ∈ {0,1}
+
+xP4Mon, xP4Tue, xP4Wed, xP4Thu, xP4Fri, xP4Sat, xP4Sun ∈ {0,1}
+
+xE1Mon, xE1Tue, xE1Wed, xE1Thu, xE1Fri, xE1Sat, xE1Sun ∈ {0,1}
+
+xE2Mon, xE2Tue, xE2Wed, xE2Thu, xE2Fri, xE2Sat, xE2Sun ∈ {0,1}
+
+xE3Mon, xE3Tue, xE3Wed, xE3Thu, xE3Fri, xE3Sat, xE3Sun ∈ {0,1}
+
+xE4Mon, xE4Tue, xE4Wed, xE4Thu, xE4Fri, xE4Sat, xE4Sun ∈ {0,1}
+
+xE5Mon, xE5Tue, xE5Wed, xE5Thu, xE5Fri, xE5Sat, xE5Sun ∈ {0,1}
+
+xE6Mon, xE6Tue, xE6Wed, xE6Thu, xE6Fri, xE6Sat, xE6Sun ∈ {0,1}
+
+xE7Mon, xE7Tue, xE7Wed, xE7Thu, xE7Fri, xE7Sat, xE7Sun ∈ {0,1}
+
+xE8Mon, xE8Tue, xE8Wed, xE8Thu, xE8Fri, xE8Sat, xE8Sun ∈ {0,1}
+
+
+Constraint Matrix Structure
+
+Columns:
+ (xP1Mon, xP1Tue, xP1Wed, xP1Thu, xP1Fri, xP1Sat, xP1Sun,
+ xP2Mon, xP2Tue, xP2Wed, xP2Thu, xP2Fri, xP2Sat, xP2Sun,
+ xP3Mon, xP3Tue, xP3Wed, xP3Thu, xP3Fri, xP3Sat, xP3Sun,
+ xP4Mon, xP4Tue, xP4Wed, xP4Thu, xP4Fri, xP4Sat, xP4Sun,
+ xE1Mon, xE1Tue, xE1Wed, xE1Thu, xE1Fri, xE1Sat, xE1Sun,
+ xE2Mon, xE2Tue, xE2Wed, xE2Thu, xE2Fri, xE2Sat, xE2Sun,
+ xE3Mon, xE3Tue, xE3Wed, xE3Thu, xE3Fri, xE3Sat, xE3Sun,
+ xE4Mon, xE4Tue, xE4Wed, xE4Thu, xE4Fri, xE4Sat, xE4Sun,
+ xE5Mon, xE5Tue, xE5Wed, xE5Thu, xE5Fri, xE5Sat, xE5Sun,
+ xE6Mon, xE6Tue, xE6Wed, xE6Thu, xE6Fri, xE6Sat, xE6Sun,
+ xE7Mon, xE7Tue, xE7Wed, xE7Thu, xE7Fri, xE7Sat, xE7Sun,
+ xE8Mon, xE8Tue, xE8Wed, xE8Thu, xE8Fri, xE8Sat, xE8Sun)
+ 
+Rows:
+Daily Minimum Staffing 
+Mon: sum of all 12 staff ≥ 6 
+
+Tue: sum of all 12 staff ≥ 6 
+
+Wed: sum of all 12 staff ≥ 8 
+
+Thu: sum of all 12 staff ≥ 8 
+
+Fri: sum of all 12 staff ≥ 10
+
+Sat: sum of all 12 staff ≥ 8
+
+Sun: sum of all 12 staff ≥ 6 
+
+Daily Minimum Paramedics
+
+Mon: sum of 4 paramedics ≥ 2 
+
+Tue: sum of 4 paramedics ≥ 2
+
+Wed: sum of 4 paramedics ≥ 3 
+
+Thu: sum of 4 paramedics ≥ 3 
+
+Fri: sum of 4 paramedics ≥ 4 
+
+Sat: sum of 4 paramedics ≥ 3 
+
+Sun: sum of 4 paramedics ≥ 2 
+
+Maximum 5 Shifts / Minimum 2 Days Off (per staff) 
+xP1Mon + xP1Tue + xP1Wed + xP1Thu + xP1Fri + xP1Sat + xP1Sun <= 5
+
+repeat for P2–P4, E1–E8 
+
+No More Than 4 Consecutive Days (per staff) 
+For each staff, sliding window of 5 days ≤ 4 Example for 
+P1: Mon–Fri ≤ 4 Tue–Sat ≤ 4 Wed–Sun ≤ 4 Repeat for P2–P4, E1–E8 
+
+Staff Availability
+
+xP1Sun = 0
+
+xP4Mon = 0 
+
+xP4Tue = 0 
+
+xE2Sat = 0 
+
+xE2Sun = 0 
+
+xE5Fri = 0
+
+
+## Manual Solution Attempt
+
+Schedule that meets requirements
+
+| Staff  | Mon | Tue | Wed | Thu | Fri | Sat | Sun | Total Shifts |
+| ------ | --- | --- | --- | --- | --- | --- | --- | ------------ |
+|   P1   | 1   | 1   | 1   | 0   | 1   | 1   | 0   | 5            |
+|   P2   | 0   | 1   | 0   | 1   | 1   | 1   | 1   | 5            |
+|   P3   | 1   | 0   | 1   | 1   | 1   | 1   | 0   | 5            |
+|   P4   | 0   | 0   | 1   | 1   | 1   | 0   | 1   | 4            |
+|   E1   | 1   | 0   | 1   | 0   | 1   | 1   | 0   | 4            |
+|   E2   | 1   | 1   | 1   | 1   | 0   | 0   | 0   | 4            |
+|   E3   | 1   | 0   | 1   | 0   | 1   | 1   | 1   | 5            |
+|   E4   | 1   | 0   | 1   | 0   | 1   | 1   | 1   | 5            |
+|   E5   | 0   | 0   | 1   | 1   | 0   | 1   | 1   | 4            |
+|   E6   | 0   | 1   | 0   | 1   | 1   | 1   | 0   | 4            |
+|   E7   | 0   | 1   | 0   | 1   | 1   | 0   | 1   | 4            |
+|   E8   | 0   | 1   | 0   | 1   | 1   | 0   | 0   | 3            |
+
+
+Total Cost for Schedule:
+P1 = 250 + 250 + 250 + 250 +300 = 1300
+
+P2 = 250 + 250 +250 + 300 + 300 = 1350
+
+P3 = 250 + 250 + 250 +250 + 300 = 1300
+
+P4 = 250 + 250 + 250 + 300 = 1050
+
+E1 = 180 + 180 + 180 + 220 = 760
+
+E2 = 180 + 180 + 180 + 180 = 720
+
+E3 = 180 + 180 + 180 + 220 + 220 = 980
+
+E4 = 180 + 180 + 180 + 220 + 220 = 980
+
+E5 = 180 + 180 + 220 + 220 = 800
+
+E6 = 180 + 180 + 180 + 220 = 760
+
+E7 = 180 + 180 + 180 + 220 = 760
+
+E8 = 180 + 180 + 180 = 540
+
+Total Cost = $11,300
+
+This schedule is not the most optimal but it does meet all requirements and tries to minimize the amount of workers needed on everyday while still meeting all requirements.
