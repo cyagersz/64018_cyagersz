@@ -40,21 +40,14 @@ Write out the complete LP formulation:
 
 Variables:
 
-S = Set of all staff
 
-S = {P1,P2,P3,P4,E1,E2,E3,E4,E5,E6,E7,E8}
+S = {P1,P2,P3,P4,E1,E2,E3,E4,E5,E6,E7,E8} Set of all staff
 
-P = Set of paramedics
+P = {P1,P2,P3,P4} Set of Paramedics
 
-P = {P1,P2,P3,P4}
+E = {E1,E2,E3,E4,E5,E6,E7,E8} Set of EMT-Basics
 
-E = Set of EMT-Basics
-
-E = {E1,E2,E3,E4,E5,E6,E7,E8}
-
-D = Days of Week
-
-D = {Mon,Tue,Wed,Thu,Fri,Sat,Sun}
+D = {Mon,Tue,Wed,Thu,Fri,Sat,Sun} Days of the Week
 
 
 Objective Function:
@@ -91,7 +84,7 @@ Friday: xP1Fri + xP2Fri + xP3Fri + xP4Fri + xE1Fri + xE2Fri + xE3Fri + xE4Fri + 
 
 Saturday: xP1Sat + xP2Sat + xP3Sat + xP4Sat + xE1Sat + xE2Sat + xE3Sat + xE4Sat + xE5Sat + xE6Sat + xE7Sat + xE8Sat >=8
 
-Sunday: xP1Sun + xP2Sun + xP3Sun + xP4Sun + xE1Sun + xE2Sun + xE3Sun + xE4Sun + xE5Sun + xE6Sun + xE7Sun + xE8Sun >=8
+Sunday: xP1Sun + xP2Sun + xP3Sun + xP4Sun + xE1Sun + xE2Sun + xE3Sun + xE4Sun + xE5Sun + xE6Sun + xE7Sun + xE8Sun >=6
 
 
 Daily Minimum Paramedics requirements
@@ -127,7 +120,7 @@ Unavailable_E5_Fri: xE5Fri = 0
 
 
 
-Maximum 5 Shifts per Staff member/ Minimum 2 Days off requirement
+Maximum 5 Shifts per Staff member / Minimum 2 Days off requirement
 
 P1Shift: xP1Mon + xP1Tue + xP1Wed + xP1Thu + xP1Fri + xP1Sat + xP1Sun <= 5
 
@@ -303,12 +296,15 @@ Sat: sum of 4 paramedics ≥ 3
 
 Sun: sum of 4 paramedics ≥ 2 
 
-Maximum 5 Shifts / Minimum 2 Days Off (per staff) 
+Maximum 5 Shifts / Minimum 2 Days Off (per staff)
+
 xP1Mon + xP1Tue + xP1Wed + xP1Thu + xP1Fri + xP1Sat + xP1Sun <= 5
 
 repeat for P2–P4, E1–E8 
 
+
 No More Than 4 Consecutive Days (per staff) 
+
 For each staff, sliding window of 5 days ≤ 4 Example for 
 P1: Mon–Fri ≤ 4 Tue–Sat ≤ 4 Wed–Sun ≤ 4 Repeat for P2–P4, E1–E8 
 
@@ -375,3 +371,120 @@ E8 = 180 + 180 + 180 = 540
 Total Cost = $11,300
 
 This schedule is not the most optimal but it does meet all requirements and tries to minimize the amount of workers needed on everyday while still meeting all requirements.
+
+
+
+## Implementation
+
+```{r}
+# Load library
+library(lpSolve)
+library(lpSolveAPI)
+```
+
+Solving with creating my own lp file
+
+```{r}
+# Read the LP file
+x <- read.lp("Final.lp")   # Specify type if it's a minimization
+
+# Display the lp object
+x  
+
+```
+Solve the lp model
+```{r}
+solve(x)
+get.objective(x)     # get objective value
+get.variables(x)     # get values of decision variables
+get.constraints(x)   # get constraints RHS values
+
+
+```
+
+```{r}
+# Staff and days
+staff <- c("P1","P2","P3","P4","E1","E2","E3","E4","E5","E6","E7","E8")
+days <- c("Mon","Tue","Wed","Thu","Fri","Sat","Sun")
+
+# Cost table
+cost_mat_base <- matrix(
+  c(
+    # P1-P4
+    250,250,250,250,250,300,300,
+    250,250,250,250,250,300,300,
+    250,250,250,250,250,300,300,
+    250,250,250,250,250,300,300,
+    # E1-E8
+    180,180,180,180,180,220,220,
+    180,180,180,180,180,220,220,
+    180,180,180,180,180,220,220,
+    180,180,180,180,180,220,220,
+    180,180,180,180,180,220,220,
+    180,180,180,180,180,220,220,
+    180,180,180,180,180,220,220,
+    180,180,180,180,180,220,220
+  ),
+  nrow = length(staff), ncol = length(days), byrow = TRUE,
+  dimnames = list(staff, days)
+)
+
+# Solution vector from LP
+x_sol_vec <- get.variables(x)
+x_sol_mat <- matrix(x_sol_vec, nrow = length(staff), ncol = length(days), byrow = TRUE,
+                    dimnames = list(staff, days))
+
+# Cost matrix
+cost_mat <- x_sol_mat * cost_mat_base
+
+# Build main table
+output <- data.frame(
+  Staff = staff,
+  Mon = ifelse(x_sol_mat[, "Mon"]==1, "✓", "-"),
+  Tue = ifelse(x_sol_mat[, "Tue"]==1, "✓", "-"),
+  Wed = ifelse(x_sol_mat[, "Wed"]==1, "✓", "-"),
+  Thu = ifelse(x_sol_mat[, "Thu"]==1, "✓", "-"),
+  Fri = ifelse(x_sol_mat[, "Fri"]==1, "✓", "-"),
+  Sat = ifelse(x_sol_mat[, "Sat"]==1, "✓", "-"),
+  Sun = ifelse(x_sol_mat[, "Sun"]==1, "✓", "-"),
+  Total_Days = rowSums(x_sol_mat),
+  Total_Cost = rowSums(cost_mat)
+)
+
+# Add total employees row
+total_emp <- c(
+  "Total Employees",
+  sapply(1:7, function(j) sum(x_sol_mat[, j])),  # total per day
+  sum(rowSums(x_sol_mat)),                        # total days
+  sum(rowSums(cost_mat))                          # total cost
+)
+
+# Add total paramedics row (P1-P4)
+total_paramedics <- c(
+  "Total Paramedics",
+  sapply(1:7, function(j) sum(x_sol_mat[1:4, j])), # total per day
+  sum(rowSums(x_sol_mat[1:4, ])),                   # total days
+  sum(rowSums(cost_mat[1:4, ]))                     # total cost
+)
+
+# Bind as extra rows
+output <- rbind(output, total_emp, total_paramedics)
+
+print(output)
+
+```
+
+
+## Solution Analysis
+
+Weekly Schedule
+```{r}
+print(output)
+
+```
+
+
+
+The total cost for all employees for the week is $11300. The paramedics are $5000 of the total weekly cost and the EMT are $6300 of the cost for the week. The schedule created by the lp solution fits the maximum of 5 days a week / minimum 2 days off a week. It also meets the required days off by certain employees. The schedule also doesn't allow for a employee to work more than 4 consecutive days. The schedule also makes sure that the required amount of total employees and paramedics are there for the required week day.
+
+Compared to my manual solution I got the same amount in cost for the total weekly cost. The schedule looks a little different but still meets all the requirements showing that there are different ways to optimize the schedule for the employees while making the cost minimized.
