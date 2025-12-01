@@ -369,7 +369,7 @@ while maintaining mandated response time standards.</p>
 <p>● Respects basic work rules</p>
 <p>● Maintains required skill mix</p>
 <p>Key Simplification: Instead of multiple shifts and complex patterns,
-you’re assigning staff to work or not work oneach day’s single peak
+you’re assigning staff to work or not work on each day’s single peak
 shift</p>
 </div>
 <div id="problem-formulation" class="section level2">
@@ -380,14 +380,10 @@ shift</p>
 <p>● List ALL constraints with proper notation</p>
 <p>● Show the constraint matrix structure</p>
 <p>Variables:</p>
-<p>S = Set of all staff</p>
-<p>S = {P1,P2,P3,P4,E1,E2,E3,E4,E5,E6,E7,E8}</p>
-<p>P = Set of paramedics</p>
-<p>P = {P1,P2,P3,P4}</p>
-<p>E = Set of EMT-Basics</p>
-<p>E = {E1,E2,E3,E4,E5,E6,E7,E8}</p>
-<p>D = Days of Week</p>
-<p>D = {Mon,Tue,Wed,Thu,Fri,Sat,Sun}</p>
+<p>P = {P1,P2,P3,P4} Set of Paramedics</p>
+<p>E = {E1,E2,E3,E4,E5,E6,E7,E8} Set of EMT-Basics</p>
+<p>S = {P1,P2,P3,P4,E1,E2,E3,E4,E5,E6,E7,E8} Set of all staff</p>
+<p>D = {Mon,Tue,Wed,Thu,Fri,Sat,Sun} Days of the Week</p>
 <p>Objective Function:</p>
 <p>Min Z = 250 (xP1Mon + xP2Mon + xP3Mon + xP4Mon) + 250 (xP1Tue +
 xP2Tue + xP3Tue + xP4Tue) + 250 (xP1Wed + xP2Wed + xP3Wed + xP4Wed) +
@@ -417,7 +413,7 @@ xE3Thu + xE4Thu + xE5Thu + xE6Thu + xE7Thu + xE8Thu &gt;=8</p>
 <p>Saturday: xP1Sat + xP2Sat + xP3Sat + xP4Sat + xE1Sat + xE2Sat +
 xE3Sat + xE4Sat + xE5Sat + xE6Sat + xE7Sat + xE8Sat &gt;=8</p>
 <p>Sunday: xP1Sun + xP2Sun + xP3Sun + xP4Sun + xE1Sun + xE2Sun + xE3Sun
-+ xE4Sun + xE5Sun + xE6Sun + xE7Sun + xE8Sun &gt;=8</p>
++ xE4Sun + xE5Sun + xE6Sun + xE7Sun + xE8Sun &gt;=6</p>
 <p>Daily Minimum Paramedics requirements</p>
 <p>PMonday: xP1Mon + xP2Mon + xP3Mon + xP4Mon &gt;=2</p>
 <p>PTuesday: xP1Tue + xP2Tue + xP3Tue + xP4Tue &gt;=2</p>
@@ -433,7 +429,8 @@ xE3Sat + xE4Sat + xE5Sat + xE6Sat + xE7Sat + xE8Sat &gt;=8</p>
 <p>Unavailable_E2_Sat: xE2Sat = 0</p>
 <p>Unavailable_E2_Sun: xE2Sun = 0</p>
 <p>Unavailable_E5_Fri: xE5Fri = 0</p>
-<p>Maximum 5 Shifts per Staff member/ Minimum 2 Days off requirement</p>
+<p>Maximum 5 Shifts per Staff member / Minimum 2 Days off
+requirement</p>
 <p>P1Shift: xP1Mon + xP1Tue + xP1Wed + xP1Thu + xP1Fri + xP1Sat + xP1Sun
 &lt;= 5</p>
 <p>P2Shift: xP2Mon + xP2Tue + xP2Wed + xP2Thu + xP2Fri + xP2Sat + xP2Sun
@@ -458,7 +455,7 @@ xE3Sat + xE4Sat + xE5Sat + xE6Sat + xE7Sat + xE8Sat &gt;=8</p>
 &lt;= 5</p>
 <p>E8Shift: xE8Mon + xE8Tue + xE8Wed + xE8Thu + xE8Fri + xE8Sat + xE8Sun
 &lt;= 5</p>
-<p>No more than 4 consecutive days requirment</p>
+<p>No more than 4 consecutive days requirement</p>
 <p>Consec4_P1_1: xP1Mon + xP1Tue + xP1Wed + xP1Thu + xP1Fri &lt;= 4</p>
 <p>Consec4_P1_2: xP1Tue + xP1Wed + xP1Thu + xP1Fri + xP1Sat &lt;= 4</p>
 <p>Consec4_P1_3: xP1Wed + xP1Thu + xP1Fri + xP1Sat + xP1Sun &lt;= 4</p>
@@ -508,6 +505,358 @@ xE3Sat + xE4Sat + xE5Sat + xE6Sat + xE7Sat + xE8Sat &gt;=8</p>
 <p>xE6Mon, xE6Tue, xE6Wed, xE6Thu, xE6Fri, xE6Sat, xE6Sun ∈ {0,1}</p>
 <p>xE7Mon, xE7Tue, xE7Wed, xE7Thu, xE7Fri, xE7Sat, xE7Sun ∈ {0,1}</p>
 <p>xE8Mon, xE8Tue, xE8Wed, xE8Thu, xE8Fri, xE8Sat, xE8Sun ∈ {0,1}</p>
+<p>Constraint Matrix Structure</p>
+<p>Columns: (xP1Mon, xP1Tue, xP1Wed, xP1Thu, xP1Fri, xP1Sat, xP1Sun,
+xP2Mon, xP2Tue, xP2Wed, xP2Thu, xP2Fri, xP2Sat, xP2Sun, xP3Mon, xP3Tue,
+xP3Wed, xP3Thu, xP3Fri, xP3Sat, xP3Sun, xP4Mon, xP4Tue, xP4Wed, xP4Thu,
+xP4Fri, xP4Sat, xP4Sun, xE1Mon, xE1Tue, xE1Wed, xE1Thu, xE1Fri, xE1Sat,
+xE1Sun, xE2Mon, xE2Tue, xE2Wed, xE2Thu, xE2Fri, xE2Sat, xE2Sun, xE3Mon,
+xE3Tue, xE3Wed, xE3Thu, xE3Fri, xE3Sat, xE3Sun, xE4Mon, xE4Tue, xE4Wed,
+xE4Thu, xE4Fri, xE4Sat, xE4Sun, xE5Mon, xE5Tue, xE5Wed, xE5Thu, xE5Fri,
+xE5Sat, xE5Sun, xE6Mon, xE6Tue, xE6Wed, xE6Thu, xE6Fri, xE6Sat, xE6Sun,
+xE7Mon, xE7Tue, xE7Wed, xE7Thu, xE7Fri, xE7Sat, xE7Sun, xE8Mon, xE8Tue,
+xE8Wed, xE8Thu, xE8Fri, xE8Sat, xE8Sun)</p>
+<p>Rows: Daily Minimum Staffing Mon: sum of all 12 staff ≥ 6</p>
+<p>Tue: sum of all 12 staff ≥ 6</p>
+<p>Wed: sum of all 12 staff ≥ 8</p>
+<p>Thu: sum of all 12 staff ≥ 8</p>
+<p>Fri: sum of all 12 staff ≥ 10</p>
+<p>Sat: sum of all 12 staff ≥ 8</p>
+<p>Sun: sum of all 12 staff ≥ 6</p>
+<p>Daily Minimum Paramedics</p>
+<p>Mon: sum of 4 paramedics ≥ 2</p>
+<p>Tue: sum of 4 paramedics ≥ 2</p>
+<p>Wed: sum of 4 paramedics ≥ 3</p>
+<p>Thu: sum of 4 paramedics ≥ 3</p>
+<p>Fri: sum of 4 paramedics ≥ 4</p>
+<p>Sat: sum of 4 paramedics ≥ 3</p>
+<p>Sun: sum of 4 paramedics ≥ 2</p>
+<p>Maximum 5 Shifts / Minimum 2 Days Off (per staff)</p>
+<p>xP1Mon + xP1Tue + xP1Wed + xP1Thu + xP1Fri + xP1Sat + xP1Sun &lt;=
+5</p>
+<p>repeat for P2–P4, E1–E8</p>
+<p>No More Than 4 Consecutive Days (per staff)</p>
+<p>For each staff, sliding window of 5 days ≤ 4 Example for P1: Mon–Fri
+≤ 4 Tue–Sat ≤ 4 Wed–Sun ≤ 4 Repeat for P2–P4, E1–E8</p>
+<p>Staff Availability</p>
+<p>xP1Sun = 0</p>
+<p>xP4Mon = 0</p>
+<p>xP4Tue = 0</p>
+<p>xE2Sat = 0</p>
+<p>xE2Sun = 0</p>
+<p>xE5Fri = 0</p>
+</div>
+<div id="manual-solution-attempt" class="section level2">
+<h2>Manual Solution Attempt</h2>
+<p>Schedule that meets requirements</p>
+<table>
+<thead>
+<tr class="header">
+<th>Staff</th>
+<th>Mon</th>
+<th>Tue</th>
+<th>Wed</th>
+<th>Thu</th>
+<th>Fri</th>
+<th>Sat</th>
+<th>Sun</th>
+<th>Total Shifts</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>P1</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+<td>5</td>
+</tr>
+<tr class="even">
+<td>P2</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>5</td>
+</tr>
+<tr class="odd">
+<td>P3</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+<td>5</td>
+</tr>
+<tr class="even">
+<td>P4</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+<td>4</td>
+</tr>
+<tr class="odd">
+<td>E1</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+<td>4</td>
+</tr>
+<tr class="even">
+<td>E2</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>4</td>
+</tr>
+<tr class="odd">
+<td>E3</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>5</td>
+</tr>
+<tr class="even">
+<td>E4</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>5</td>
+</tr>
+<tr class="odd">
+<td>E5</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+<td>4</td>
+</tr>
+<tr class="even">
+<td>E6</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+<td>4</td>
+</tr>
+<tr class="odd">
+<td>E7</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+<td>4</td>
+</tr>
+<tr class="even">
+<td>E8</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>3</td>
+</tr>
+</tbody>
+</table>
+<p>Total Cost for Schedule: P1 = 250 + 250 + 250 + 250 +300 = 1300</p>
+<p>P2 = 250 + 250 +250 + 300 + 300 = 1350</p>
+<p>P3 = 250 + 250 + 250 +250 + 300 = 1300</p>
+<p>P4 = 250 + 250 + 250 + 300 = 1050</p>
+<p>E1 = 180 + 180 + 180 + 220 = 760</p>
+<p>E2 = 180 + 180 + 180 + 180 = 720</p>
+<p>E3 = 180 + 180 + 180 + 220 + 220 = 980</p>
+<p>E4 = 180 + 180 + 180 + 220 + 220 = 980</p>
+<p>E5 = 180 + 180 + 220 + 220 = 800</p>
+<p>E6 = 180 + 180 + 180 + 220 = 760</p>
+<p>E7 = 180 + 180 + 180 + 220 = 760</p>
+<p>E8 = 180 + 180 + 180 = 540</p>
+<p>Total Cost = $11,300</p>
+<p>This schedule is not the most optimal but it does meet all
+requirements and tries to minimize the amount of workers needed on
+everyday while still meeting all requirements.</p>
+</div>
+<div id="implementation" class="section level2">
+<h2>Implementation</h2>
+<pre class="r"><code># Load library
+library(lpSolve)
+library(lpSolveAPI)</code></pre>
+<p>Solving with creating my own lp file</p>
+<pre class="r"><code># Read the LP file
+x &lt;- read.lp(&quot;Final.lp&quot;)  
+
+# Display the lp object
+x  </code></pre>
+<pre><code>## Model name: 
+##   a linear program with 84 decision variables and 68 constraints</code></pre>
+<p>Solve the lp model</p>
+<pre class="r"><code>solve(x)</code></pre>
+<pre><code>## [1] 0</code></pre>
+<pre class="r"><code>get.objective(x)     # get objective value</code></pre>
+<pre><code>## [1] 11300</code></pre>
+<pre class="r"><code>get.variables(x)     # get values of decision variables</code></pre>
+<pre><code>##  [1] 1 1 1 0 1 1 0 0 1 0 1 1 1 1 1 0 1 1 1 0 1 0 0 1 1 1 1 0 1 0 1 0 0 0 1 1 1 0
+## [39] 0 1 0 0 1 1 0 0 1 1 1 0 1 0 1 1 1 1 0 1 1 1 0 1 1 1 0 1 1 1 1 0 0 0 1 1 1 1
+## [77] 0 0 0 1 1 1 0 0</code></pre>
+<pre class="r"><code>get.constraints(x)   # get constraints RHS values</code></pre>
+<pre><code>##  [1]  6  6  8  8 10  8  6  2  2  3  3  4  3  2  5  5  5  4  3  3  5  5  5  5  4
+## [26]  3  4  4  3  3  4  4  4  3  4  3  4  4  2  1  2  3  2  1  3  3  3  3  4  4
+## [51]  3  4  4  4  4  4  3  4  4  3  3  3  0  0  0  0  0  0</code></pre>
+<pre class="r"><code># Staff and days
+staff &lt;- c(&quot;P1&quot;,&quot;P2&quot;,&quot;P3&quot;,&quot;P4&quot;,&quot;E1&quot;,&quot;E2&quot;,&quot;E3&quot;,&quot;E4&quot;,&quot;E5&quot;,&quot;E6&quot;,&quot;E7&quot;,&quot;E8&quot;)
+days &lt;- c(&quot;Mon&quot;,&quot;Tue&quot;,&quot;Wed&quot;,&quot;Thu&quot;,&quot;Fri&quot;,&quot;Sat&quot;,&quot;Sun&quot;)
+
+# Cost table
+cost_mat_base &lt;- matrix(
+  c(
+    # P1-P4
+    250,250,250,250,250,300,300,
+    250,250,250,250,250,300,300,
+    250,250,250,250,250,300,300,
+    250,250,250,250,250,300,300,
+    # E1-E8
+    180,180,180,180,180,220,220,
+    180,180,180,180,180,220,220,
+    180,180,180,180,180,220,220,
+    180,180,180,180,180,220,220,
+    180,180,180,180,180,220,220,
+    180,180,180,180,180,220,220,
+    180,180,180,180,180,220,220,
+    180,180,180,180,180,220,220
+  ),
+  nrow = length(staff), ncol = length(days), byrow = TRUE,
+  dimnames = list(staff, days)
+)
+
+# Solution vector from LP
+x_sol_vec &lt;- get.variables(x)
+x_sol_mat &lt;- matrix(x_sol_vec, nrow = length(staff), ncol = length(days), byrow = TRUE,
+                    dimnames = list(staff, days))
+
+# Cost matrix
+cost_mat &lt;- x_sol_mat * cost_mat_base
+
+# Build main table
+output &lt;- data.frame(
+  Staff = staff,
+  Mon = ifelse(x_sol_mat[, &quot;Mon&quot;]==1, &quot;✓&quot;, &quot;-&quot;),
+  Tue = ifelse(x_sol_mat[, &quot;Tue&quot;]==1, &quot;✓&quot;, &quot;-&quot;),
+  Wed = ifelse(x_sol_mat[, &quot;Wed&quot;]==1, &quot;✓&quot;, &quot;-&quot;),
+  Thu = ifelse(x_sol_mat[, &quot;Thu&quot;]==1, &quot;✓&quot;, &quot;-&quot;),
+  Fri = ifelse(x_sol_mat[, &quot;Fri&quot;]==1, &quot;✓&quot;, &quot;-&quot;),
+  Sat = ifelse(x_sol_mat[, &quot;Sat&quot;]==1, &quot;✓&quot;, &quot;-&quot;),
+  Sun = ifelse(x_sol_mat[, &quot;Sun&quot;]==1, &quot;✓&quot;, &quot;-&quot;),
+  Total_Days = rowSums(x_sol_mat),
+  Total_Cost = rowSums(cost_mat)
+)
+
+# Add total employees row
+total_emp &lt;- c(
+  &quot;Total Employees&quot;,
+  sapply(1:7, function(j) sum(x_sol_mat[, j])),  # total per day
+  sum(rowSums(x_sol_mat)),                        # total days
+  sum(rowSums(cost_mat))                          # total cost
+)
+
+# Add total paramedics row (P1-P4)
+total_paramedics &lt;- c(
+  &quot;Total Paramedics&quot;,
+  sapply(1:7, function(j) sum(x_sol_mat[1:4, j])), # total per day
+  sum(rowSums(x_sol_mat[1:4, ])),                   # total days
+  sum(rowSums(cost_mat[1:4, ]))                     # total cost
+)
+
+# Bind as extra rows
+output &lt;- rbind(output, total_emp, total_paramedics)
+
+print(output)</code></pre>
+<pre><code>##               Staff Mon Tue Wed Thu Fri Sat Sun Total_Days Total_Cost
+## P1               P1   ✓   ✓   ✓   -   ✓   ✓   -          5       1300
+## P2               P2   -   ✓   -   ✓   ✓   ✓   ✓          5       1350
+## P3               P3   ✓   -   ✓   ✓   ✓   -   ✓          5       1300
+## P4               P4   -   -   ✓   ✓   ✓   ✓   -          4       1050
+## E1               E1   ✓   -   ✓   -   -   -   ✓          3        580
+## E2               E2   ✓   ✓   -   -   ✓   -   -          3        540
+## E3               E3   ✓   ✓   -   -   ✓   ✓   ✓          5        980
+## E4               E4   -   ✓   -   ✓   ✓   ✓   ✓          5        980
+## E5               E5   -   ✓   ✓   ✓   -   ✓   ✓          5        980
+## E6               E6   ✓   -   ✓   ✓   ✓   ✓   -          5        940
+## E7               E7   -   -   ✓   ✓   ✓   ✓   -          4        760
+## E8               E8   -   -   ✓   ✓   ✓   -   -          3        540
+## 13  Total Employees   6   6   8   8  10   8   6         52      11300
+## 14 Total Paramedics   2   2   3   3   4   3   2         19       5000</code></pre>
+</div>
+<div id="solution-analysis" class="section level2">
+<h2>Solution Analysis</h2>
+<p>Weekly Schedule</p>
+<pre class="r"><code>print(output)</code></pre>
+<pre><code>##               Staff Mon Tue Wed Thu Fri Sat Sun Total_Days Total_Cost
+## P1               P1   ✓   ✓   ✓   -   ✓   ✓   -          5       1300
+## P2               P2   -   ✓   -   ✓   ✓   ✓   ✓          5       1350
+## P3               P3   ✓   -   ✓   ✓   ✓   -   ✓          5       1300
+## P4               P4   -   -   ✓   ✓   ✓   ✓   -          4       1050
+## E1               E1   ✓   -   ✓   -   -   -   ✓          3        580
+## E2               E2   ✓   ✓   -   -   ✓   -   -          3        540
+## E3               E3   ✓   ✓   -   -   ✓   ✓   ✓          5        980
+## E4               E4   -   ✓   -   ✓   ✓   ✓   ✓          5        980
+## E5               E5   -   ✓   ✓   ✓   -   ✓   ✓          5        980
+## E6               E6   ✓   -   ✓   ✓   ✓   ✓   -          5        940
+## E7               E7   -   -   ✓   ✓   ✓   ✓   -          4        760
+## E8               E8   -   -   ✓   ✓   ✓   -   -          3        540
+## 13  Total Employees   6   6   8   8  10   8   6         52      11300
+## 14 Total Paramedics   2   2   3   3   4   3   2         19       5000</code></pre>
+<p>The total cost for all employees for the week is $11300. The
+paramedics are $5000 of the total weekly cost and the EMT are $6300 of
+the cost for the week. The schedule created by the lp solution fits the
+maximum of 5 days a week / minimum 2 days off a week. It also meets the
+required days off by certain employees. The schedule also doesn’t allow
+for a employee to work more than 4 consecutive days. The schedule also
+makes sure that the required amount of total employees and paramedics
+are there for the required week day. It also is all in binary for the lp
+formulation.</p>
+<p>Compared to my manual solution I got the same amount in cost for the
+total weekly cost. The schedule looks a little different but still meets
+all the requirements showing that there are different ways to optimize
+the schedule for the employees while making the cost minimized.</p>
 </div>
 
 

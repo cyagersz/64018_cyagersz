@@ -40,12 +40,11 @@ Write out the complete LP formulation:
 
 Variables:
 
-
-S = {P1,P2,P3,P4,E1,E2,E3,E4,E5,E6,E7,E8} Set of all staff
-
 P = {P1,P2,P3,P4} Set of Paramedics
 
 E = {E1,E2,E3,E4,E5,E6,E7,E8} Set of EMT-Basics
+
+S = {P1,P2,P3,P4,E1,E2,E3,E4,E5,E6,E7,E8} Set of all staff
 
 D = {Mon,Tue,Wed,Thu,Fri,Sat,Sun} Days of the Week
 
@@ -386,7 +385,7 @@ Solving with creating my own lp file
 
 ```{r}
 # Read the LP file
-x <- read.lp("Final.lp")   # Specify type if it's a minimization
+x <- read.lp("Final.lp")  
 
 # Display the lp object
 x  
@@ -485,6 +484,6 @@ print(output)
 
 
 
-The total cost for all employees for the week is $11300. The paramedics are $5000 of the total weekly cost and the EMT are $6300 of the cost for the week. The schedule created by the lp solution fits the maximum of 5 days a week / minimum 2 days off a week. It also meets the required days off by certain employees. The schedule also doesn't allow for a employee to work more than 4 consecutive days. The schedule also makes sure that the required amount of total employees and paramedics are there for the required week day.
+The total cost for all employees for the week is $11300. The paramedics are $5000 of the total weekly cost and the EMT are $6300 of the cost for the week. The schedule created by the lp solution fits the maximum of 5 days a week / minimum 2 days off a week. It also meets the required days off by certain employees. The schedule also doesn't allow for a employee to work more than 4 consecutive days. The schedule also makes sure that the required amount of total employees and paramedics are there for the required week day. It also is all in binary for the lp formulation.
 
 Compared to my manual solution I got the same amount in cost for the total weekly cost. The schedule looks a little different but still meets all the requirements showing that there are different ways to optimize the schedule for the employees while making the cost minimized.
